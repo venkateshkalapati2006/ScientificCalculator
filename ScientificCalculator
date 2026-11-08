@@ -1,0 +1,128 @@
+import java.util.Scanner;
+
+public class ScientificCalculator {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        while (true) {
+            System.out.println("\n===== SCIENTIFIC CALCULATOR =====");
+            System.out.println("1. Addition");
+            System.out.println("2. Subtraction");
+            System.out.println("3. Multiplication");
+            System.out.println("4. Division");
+            System.out.println("5. Power");
+            System.out.println("6. Square Root");
+            System.out.println("7. Sine");
+            System.out.println("8. Cosine");
+            System.out.println("9. Tangent");
+            System.out.println("10. Logarithm (base 10)");
+            System.out.println("11. Exit");
+            System.out.print("Enter choice: ");
+
+            if (!sc.hasNextInt()) {
+                System.out.println("Invalid choice.");
+                sc.nextLine();
+                continue;
+            }
+
+            int choice = sc.nextInt();
+
+            if (choice == 11) {
+                System.out.println("Thank you!");
+                break;
+            }
+
+            if (choice < 1 || choice > 10) {
+                System.out.println("Invalid choice.");
+                continue;
+            }
+
+            System.out.print("Enter first number: ");
+            if (!sc.hasNextDouble()) {
+                System.out.println("Invalid number.");
+                sc.nextLine();
+                continue;
+            }
+
+            double a = sc.nextDouble();
+            double b = 0;
+
+            if (choice >= 1 && choice <= 5) {
+                System.out.print("Enter second number: ");
+                if (!sc.hasNextDouble()) {
+                    System.out.println("Invalid number.");
+                    sc.nextLine();
+                    continue;
+                }
+                b = sc.nextDouble();
+            }
+
+            double result = 0;
+            boolean valid = true;
+
+            switch (choice) {
+                case 1:
+                    result = a + b;
+                    break;
+                case 2:
+                    result = a - b;
+                    break;
+                case 3:
+                    result = a * b;
+                    break;
+                case 4:
+                    if (b == 0) {
+                        System.out.println("Cannot divide by zero.");
+                        valid = false;
+                    } else {
+                        result = a / b;
+                    }
+                    break;
+                case 5:
+                    result = Math.pow(a, b);
+                    break;
+                case 6:
+                    if (a < 0) {
+                        System.out.println("Cannot find square root of a negative number.");
+                        valid = false;
+                    } else {
+                        result = Math.sqrt(a);
+                    }
+                    break;
+                case 7:
+                    result = Math.sin(Math.toRadians(a));
+                    break;
+                case 8:
+                    result = Math.cos(Math.toRadians(a));
+                    break;
+                case 9:
+                    double radians = Math.toRadians(a);
+                    if (Math.abs(Math.cos(radians)) < 1e-10) {
+                        System.out.println("Tangent is undefined.");
+                        valid = false;
+                    } else {
+                        result = Math.tan(radians);
+                    }
+                    break;
+                case 10:
+                    if (a <= 0) {
+                        System.out.println("Logarithm requires a positive number.");
+                        valid = false;
+                    } else {
+                        result = Math.log10(a);
+                    }
+                    break;
+            }
+
+            if (valid) {
+                if (Double.isFinite(result)) {
+                    System.out.println("Result: " + result);
+                } else {
+                    System.out.println("Result is outside the numeric range.");
+                }
+            }
+        }
+
+        sc.close();
+    }
+}
